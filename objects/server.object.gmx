@@ -54,6 +54,7 @@ gamemode.gamestate = mode.connecting;
             <string>if(keyboard_check_released(global.esc)&amp;&amp;gamemode.gamestate == mode.connecting){
     server_send_gamemode_message(send_buffer, M_GAMEMODE, mode.starting);
     gamemode.gamestate = mode.starting;
+    obj_game_timers.alarm[0] = obj_game_timers.item_timer;
 }
 </string>
           </argument>

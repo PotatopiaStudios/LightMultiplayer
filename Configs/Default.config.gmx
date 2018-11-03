@@ -678,7 +678,7 @@
     <option_xbone_title_id></option_xbone_title_id>
   </Options>
   <ConfigConstants>
-    <constants number="17">
+    <constants number="19">
       <constant name="HEALTH_LIMIT">4</constant>
       <constant name="ITEM_LIMIT">200</constant>
       <constant name="ITEM_WEIGHT">10</constant>
@@ -696,6 +696,8 @@
       <constant name="MAX_CLIENTS">20</constant>
       <constant name="playerview">0</constant>
       <constant name="UPDATE_SPEED">6</constant>
+      <constant name="M_MONSTER_ITEM">11</constant>
+      <constant name="M_MONSTER_ITEM_DROPPED">12</constant>
     </constants>
   </ConfigConstants>
 </Config>

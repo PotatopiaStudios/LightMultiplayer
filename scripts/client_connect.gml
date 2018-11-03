@@ -106,6 +106,23 @@ while(buffer_tell(buffer) != buffer_get_size(buffer)){
                 current_item.image_angle = buffer_read(buffer, buffer_u16);
                 current_item.image_index = current_item.item_id; 
         break;
+        case M_MONSTER_ITEM:
+           var current_item = instance_create(0, 0, obj_monster_item);
+                current_item.item_id = buffer_read(buffer, buffer_u8);
+                current_item.x = obj_nest.x + buffer_read(buffer, buffer_u8);
+                current_item.y = obj_nest.y + buffer_read(buffer, buffer_u8);
+                current_item.image_angle = buffer_read(buffer, buffer_u16);
+                current_item.image_index = current_item.item_id; 
+        break;
+        case M_MONSTER_ITEM_DROPPED:
+           var current_item = instance_create(0, 0, obj_monster_item);
+                current_item.item_id = buffer_read(buffer, buffer_u8);
+                current_item.x = buffer_read(buffer, buffer_u16);
+                current_item.y = buffer_read(buffer, buffer_u16);
+                current_item.image_angle = buffer_read(buffer, buffer_u16);
+                current_item.image_index = current_item.item_id;  
+        break;
+        
     }
 
 }

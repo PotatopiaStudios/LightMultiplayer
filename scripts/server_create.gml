@@ -169,6 +169,24 @@ while(buffer_tell(buffer)!=buffer_get_size(buffer)){
                 }
             }
         break;
+        case M_MONSTER_ITEM_DROPPED:
+            var mat = buffer_read(buffer, buffer_u8);
+            var xx = buffer_read(buffer, buffer_u16);
+            var yy = buffer_read(buffer, buffer_u16);
+            var dir = buffer_read(buffer, buffer_u16);
+            
+            buffer_seek(send_buffer, buffer_seek_start, 0);
+            buffer_write(send_buffer, buffer_u8, M_MONSTER_ITEM_DROPPED);
+            buffer_write(send_buffer, buffer_u8, mat);
+            buffer_write(send_buffer, buffer_u16, xx);
+            buffer_write(send_buffer, buffer_u16, yy);
+            buffer_write(send_buffer, buffer_u16, dir);
+            for(var i = 0; i < ds_grid_width(clients); i++){
+                if(i != current_client){
+                    network_send_raw(clients[# i, 0], send_buffer, buffer_tell(send_buffer));
+                }
+            }
+        break;
     }
 
 }
