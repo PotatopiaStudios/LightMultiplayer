@@ -82,7 +82,7 @@ while(buffer_tell(buffer) != buffer_get_size(buffer)){
             instance_destroy(global.crateMap[? string(crate_id)]);
         break;
         case M_ITEM_OBTAINED:
-            var item_id = buffer_read(buffer, buffer_u8);
+            var item_id = buffer_read(buffer, buffer_u16);
             instance_destroy(global.itemMap[? string(item_id)]);
         break;
         case M_ITEM:

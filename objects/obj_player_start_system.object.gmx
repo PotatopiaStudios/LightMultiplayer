@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>-1</persistent>
+  <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -25,26 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>enum basestat {
-    spd = 90,
-    sprint = 1.4,
-    hp = 100,
-    def = 100,
-    stamina = 3,
-    mhp = 120,
-    mspd = 80,
-    msprint = 2,
-    mdef = 70,
-    mstamina = 1,
-    damage = 10,
-    attack_speed = 0.5
-    
-}
-enum tecstat {
-    rspd = 900,
-    mrspd = 400
-}
-
+            <string>global.startMap = ds_map_create();
+global.startCounter = 0;
 </string>
           </argument>
         </arguments>

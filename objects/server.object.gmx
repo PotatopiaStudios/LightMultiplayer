@@ -29,6 +29,7 @@
 server_logs = ds_list_create();
 server_log("created server on port " + string(global.port));
 gamemode.gamestate = mode.connecting;
+
 </string>
           </argument>
         </arguments>

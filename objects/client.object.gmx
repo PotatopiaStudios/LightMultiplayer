@@ -78,15 +78,17 @@ alarm[0] = UPDATE_SPEED;
             <string>if(gamemode.gamestate == mode.starting){
     if(room != rm_map){
         room_goto(rm_map);
-    }
-    for(var i = 0; i &lt; ds_grid_width(clients); i++){
-        if(clients[# i, 0] == noone &amp;&amp; i != client_id){
-            var c = room_instance_add(rm_map, 128, 128, obj_other_client);
-            clients[# i, 0] = c;
-        }else if(clients[# i, 0] == noone &amp;&amp; i == client_id){
-            player = room_instance_add(rm_map, 128, 128, obj_player);
-            //player.colour = global.playercolours[i];
-            clients[# i, 0] = player;
+    }else{
+        for(var i = 0; i &lt; ds_grid_width(clients); i++){
+            if(clients[# i, 0] == noone &amp;&amp; i != client_id){
+                var c = room_instance_add(rm_map, global.startMap[? string(i)].x, global.startMap[? string(i)].y, obj_other_client);
+                c.clientID = i;
+                clients[# i, 0] = c;
+            }else if(clients[# i, 0] == noone &amp;&amp; i == client_id){
+                player = room_instance_add(rm_map, global.startMap[? string(i)].x, global.startMap[? string(i)].y, obj_player);
+                //player.colour = global.playercolours[i];
+                clients[# i, 0] = player;
+            }
         }
     }
     

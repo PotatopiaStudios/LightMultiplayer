@@ -35,6 +35,8 @@ todir = dir;
 colour = global.playercolours[0];
 item = material.air;
 infected = false;
+clientID = -1;
+
 </string>
           </argument>
         </arguments>

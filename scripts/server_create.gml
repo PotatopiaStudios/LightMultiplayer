@@ -132,7 +132,7 @@ while(buffer_tell(buffer)!=buffer_get_size(buffer)){
             var item_id = buffer_read(buffer, buffer_u8);
             buffer_seek(send_buffer, buffer_seek_start, 0);
             buffer_write(send_buffer, buffer_u8, M_ITEM_OBTAINED);
-            buffer_write(send_buffer, buffer_u8, item_id);
+            buffer_write(send_buffer, buffer_u16, item_id);
             for(var i = 0; i < ds_grid_width(clients); i++){
                 if(i != current_client){
                     network_send_raw(clients[# i, 0], send_buffer, buffer_tell(send_buffer));

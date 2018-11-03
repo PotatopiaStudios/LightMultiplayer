@@ -14,6 +14,7 @@ yaxis = (keyboard_check(global.down) - keyboard_check(global.up));
 var moving = (xaxis!=0||yaxis!=0);
 var rot = point_direction(0, 0, xaxis, yaxis);
 if(moving){
+    image_speed = 7;
     var dir = point_direction(0, 0, xaxis, yaxis);
     var xtarg = x+lengthdir_x(mspd, rot);
     var ytarg = y+lengthdir_y(mspd, rot);
@@ -24,6 +25,8 @@ if(moving){
         y = ytarg;
     }
     return sin(degtorad(rot - r))*tecstat.mrspd*gamemode.delta;
+}else{
+    image_speed = 0;
 }
 return 0;
 
@@ -40,17 +43,16 @@ if(instance_exists(obj_monster_item)){
                 if(place_meeting(x, y, obj_monster_item)){
                             var inst = instance_place(x, y, obj_item);
                             var item = inst.item_id;
-                            if(total_items*ITEM_WEIGHT < ITEM_LIMIT && drop_timer <= 0){
+                            if(mtotal_items*ITEM_WEIGHT < ITEM_LIMIT && drop_timer <= 0){
                                 minv[item-1]++;
-                                total_items++;
+                                mtotal_items++;
+                                instance_destroy(inst);
                                 with(client){
                                     buffer_seek(send_buffer, buffer_seek_start, 0);
                                     buffer_write(send_buffer, buffer_u8, M_ITEM_OBTAINED);
-                                    buffer_write(send_buffer, buffer_u8, inst.itemID);
+                                    buffer_write(send_buffer, buffer_u16, inst.itemID);
                                     network_send_raw(socket, send_buffer, buffer_tell(send_buffer));
-                                    client_send_item(item-1, other.inv[other.selected]);
                                 }
-                                instance_destroy(inst);
                             }  
 
                     
@@ -62,7 +64,7 @@ if(instance_exists(obj_monster_item)){
 if(keyboard_check_released(global.drop)){
     if(minv[selected] > 0){
         minv[selected]--;
-        total_items--;
+        mtotal_items--;
         drop_timer = 1;
         var item = instance_create(x, y, obj_monster_item);
         item.image_angle = dir-90;
@@ -77,8 +79,27 @@ if(keyboard_check_released(global.drop)){
             buffer_write(send_buffer, buffer_u16, round(item.image_angle));
             network_send_raw(socket, send_buffer, buffer_tell(send_buffer));
         }
-        with(client){
-                    client_send_item(other.selected, other.inv[other.selected]);
-                }
     }
+}
+
+#define scr_monster_melee
+///scr_monster_melee();
+if(mouse_check_button_pressed(mb_left)){
+    if(attack_timer <= 0){
+        draw_sprite(spr_attack, 0,  x + lengthdir_x(8, dir), y + lengthdir_y(8, dir));
+        var inst = collision_circle(x + lengthdir_x(8, dir), y + lengthdir_y(8, dir), 4, obj_other_client, true, true);
+        if(inst != noone){
+            with(client){
+                buffer_seek(send_buffer, buffer_seek_start, 0);
+                buffer_write(send_buffer, buffer_u8, M_MELEE);
+                buffer_write(send_buffer, buffer_u8, damage);
+                buffer_write(send_buffer, buffer_u8, inst.clientID);
+                network_send_raw(socket, send_buffer, buffer_tell(send_buffer));
+            }
+            attack_timer = basestat.attack_speed;
+        }
+    }
+}
+if(attack_timer > 0){
+    attack_timer-= gamemode.delta;
 }
