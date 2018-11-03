@@ -13,6 +13,7 @@
     <sprite>sprites\spr_item</sprite>
     <sprite>sprites\spr_hold_items</sprite>
     <sprite>sprites\spr_monster</sprite>
+    <sprite>sprites\spr_monster_crate</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_menu</background>
@@ -74,6 +75,7 @@
       <object>objects\obj_player</object>
       <object>objects\obj_item</object>
       <object>objects\obj_camera</object>
+      <object>objects\obj_monster_crate</object>
     </objects>
     <objects name="network">
       <object>objects\obj_other_client</object>
