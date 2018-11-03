@@ -65,6 +65,9 @@
     <font>fonts\f_inv</font>
   </fonts>
   <objects name="objects">
+    <object>objects\obj_nest</object>
+    <object>objects\obj_wall</object>
+    <object>objects\obj_rock_wall</object>
     <object>objects\map_player_start</object>
     <objects name="gameplay">
       <objects name="system">
@@ -74,14 +77,11 @@
         <object>objects\obj_solid</object>
         <object>objects\controls</object>
       </objects>
-      <object>objects\obj_wall</object>
       <object>objects\obj_crate</object>
       <object>objects\obj_player</object>
       <object>objects\obj_item</object>
       <object>objects\obj_camera</object>
       <object>objects\obj_monster_item</object>
-      <object>objects\obj_nest</object>
-      <object>objects\obj_rock_wall</object>
     </objects>
     <objects name="network">
       <object>objects\obj_other_client</object>
