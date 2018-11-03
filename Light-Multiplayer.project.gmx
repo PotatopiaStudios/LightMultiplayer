@@ -13,10 +13,11 @@
     <sprite>sprites\spr_item</sprite>
     <sprite>sprites\spr_hold_items</sprite>
     <sprite>sprites\spr_monster</sprite>
-    <sprite>sprites\spr_monster_crate</sprite>
     <sprite>sprites\spr_nest</sprite>
     <sprite>sprites\spr_rock_wall</sprite>
     <sprite>sprites\spr_monster_item</sprite>
+    <sprite>sprites\spr_attack</sprite>
+    <sprite>sprites\spr_door</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_menu</background>
@@ -73,6 +74,7 @@
         <object>objects\gamemode</object>
         <object>objects\obj_solid</object>
         <object>objects\controls</object>
+        <object>objects\obj_player_start_system</object>
       </objects>
       <object>objects\obj_wall</object>
       <object>objects\obj_crate</object>
@@ -82,6 +84,7 @@
       <object>objects\obj_monster_item</object>
       <object>objects\obj_nest</object>
       <object>objects\obj_rock_wall</object>
+      <object>objects\obj_door</object>
     </objects>
     <objects name="network">
       <object>objects\obj_other_client</object>

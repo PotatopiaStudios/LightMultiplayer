@@ -40,7 +40,7 @@ if(instance_exists(obj_item)){
                                 with(client){
                                     buffer_seek(send_buffer, buffer_seek_start, 0);
                                     buffer_write(send_buffer, buffer_u8, M_ITEM_OBTAINED);
-                                    buffer_write(send_buffer, buffer_u8, inst.itemID);
+                                    buffer_write(send_buffer, buffer_u16, inst.itemID);
                                     network_send_raw(socket, send_buffer, buffer_tell(send_buffer));
                                     client_send_item(item-1, other.inv[other.selected]);
                                 }
@@ -83,3 +83,23 @@ if(keyboard_check_released(global.drop)){
 var mdir = point_direction(x, y, mouse_x, mouse_y);
 dir += sin(degtorad(mdir - dir))*tecstat.rspd*gamemode.delta;
             
+#define scr_player_crawl
+///scr_player_crawl();
+var secconds_passed = delta_time/1000000;
+var mspd = spd*secconds_passed*0.1;
+
+xaxis = (keyboard_check(global.right) - keyboard_check(global.left));
+yaxis = (keyboard_check(global.down) - keyboard_check(global.up));
+
+var moving = (xaxis!=0||yaxis!=0);
+if(moving){
+    var dir = point_direction(0, 0, xaxis, yaxis);
+    var xtarg = x+lengthdir_x(mspd, dir);
+    var ytarg = y+lengthdir_y(mspd, dir);
+    if(!place_meeting(xtarg, y, obj_solid)){
+        x = xtarg;
+    }
+    if(!place_meeting(x, ytarg, obj_solid)){
+        y = ytarg;
+    }
+}

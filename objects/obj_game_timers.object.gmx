@@ -63,7 +63,10 @@ with(server){
         network_send_raw(clients[# i, 0], send_buffer, buffer_tell(send_buffer));
     }
 }
-alarm[0] = item_timer*0.99;
+alarm[0] = item_timer;
+item_timer*=.97;
+item_timer = clamp(item_timer, room_speed*5, room_speed*20);
+
 </string>
           </argument>
         </arguments>

@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>infected = false;
-
+stunned = false;
 //initialize player
 spd = basestat.spd;
 hp = basestat.hp;
@@ -47,10 +47,19 @@ psel = 0;
 drop_timer = 0;
 //initialize monster
 mspd = basestat.mspd;
+damage = basestat.damage;
 mhp = basestat.mhp;
 mdef = basestat.mdef;
 mstamina = basestat.mstamina;
 msprint = basestat.msprint;
+MITEMS = sprite_get_number(spr_monster_item)-1;
+for(var i = 0; i &lt; MITEMS; i++){
+    minv[i] = 0;
+}
+mtotal_items = 0;
+mselected = 0;
+mpsel = 0;
+attack_timer = basestat.attack_speed;
 
 </string>
           </argument>
@@ -78,7 +87,11 @@ msprint = basestat.msprint;
     
     if(gamemode.gamestate == mode.in_game){
         if(!infected){
-            scr_player_move(sprint);
+            if(!stunned){
+                scr_player_move(sprint);
+            }else{
+                scr_player_crawl();
+            }
             spd = basestat.spd*(1 - (.3*((total_items*ITEM_WEIGHT)/ITEM_LIMIT)));
             scr_player_rotate();
             scr_player_item();
@@ -101,9 +114,23 @@ msprint = basestat.msprint;
                     client_send_item(other.selected, other.inv[other.selected]);
                 }
             }
-        }else{
+        }else if(infected){
             dir += scr_monster_move(msprint, dir);
             scr_monster_item();
+            scr_monster_melee();
+            psel = selected;
+            if(mouse_wheel_down()){
+                mselected--;
+                if(mselected &lt; 0){
+                    mselected = MITEMS-1;
+                }
+            }
+            if(mouse_wheel_up()){
+                mselected++;
+                if(mselected &gt; MITEMS-1){
+                    mselected = 0;
+                }
+            }
         }
         camera.x += (x-camera.x)*.1;
         camera.y += (y-camera.y)*.1;
@@ -147,7 +174,7 @@ msprint = basestat.msprint;
         if(i == selected){
            draw_sprite_ext(spr_item, i+1, xx+lengthdir_x(buffer, rot-90), lengthdir_y(buffer, rot-90), 3, 3, rot, c_white, 1); 
         }else{
-        draw_sprite_ext(spr_item, i+1, xx+lengthdir_x(buffer, rot-90), lengthdir_y(buffer, rot-90), 1.2, 1.2, rot, c_white, 1);
+            draw_sprite_ext(spr_item, i+1, xx+lengthdir_x(buffer, rot-90), lengthdir_y(buffer, rot-90), 1.2, 1.2, rot, c_white, 1);
         }
     }
     draw_set_halign(fa_middle);
@@ -159,6 +186,30 @@ msprint = basestat.msprint;
         c = c_maroon;
     }
     draw_text_transformed_colour(xx, buffer*2.0, "Weight:"+string(total_items*ITEM_WEIGHT), .8, .8, 5, c, c, c, c, .6);
+}else if(gamemode.gamestate==mode.in_game){
+    var buffer = 24;
+    var xx = display_get_gui_width()-buffer*1.5;
+    var angle_diff = 360/MITEMS; 
+    for(var i = 0; i &lt; MITEMS; i++){
+        var rot = (mpsel-i)*angle_diff;
+        var trot = (mselected-i)*angle_diff;
+        rot += (trot-rot)*.1;
+        if(i == mselected){
+           draw_sprite_ext(spr_monster_item, i+1, xx+lengthdir_x(buffer, rot-90), lengthdir_y(buffer, rot-90), 3, 3, rot, c_white, 1); 
+        }else{
+            draw_sprite_ext(spr_monster_item, i+1, xx+lengthdir_x(buffer, rot-90), lengthdir_y(buffer, rot-90), 1.2, 1.2, rot, c_white, 1);
+        }
+    }
+    draw_set_halign(fa_middle);
+    draw_set_valign(fa_middle);
+    draw_set_font(f_inv);
+    draw_text_transformed(xx, buffer*1.6, minv[mselected], .8, .8, 5);
+    var c = c_white;
+    if(mtotal_items*ITEM_WEIGHT &gt; ITEM_LIMIT -50){
+        c = c_maroon;
+    }
+    draw_text_transformed_colour(xx, buffer*2.0, "Weight:"+string(mtotal_items*ITEM_WEIGHT), .8, .8, 5, c, c, c, c, .6);
+        
 }
 </string>
           </argument>

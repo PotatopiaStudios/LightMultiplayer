@@ -106,7 +106,7 @@ breaking = false;
     if(break_timer &lt;= 0){
         var item;
         instance_destroy(id);
-        for(var i = 0; i &lt; irandom_range(1, 4); i++){
+        for(var i = 0; i &lt; irandom_range(1, 2); i++){
             item[i] = instance_create(x+random_range(-4, 4),y+random_range(-4, 4), obj_item);
             item[i].item_id = weighted_random(material.battery, 4, material.gun, 1, material.ammo, 3, material.knife, 1, material.healthpack, 2, material.wire, 5, material.car_battery, 1, material.armour_plating, 1);
             item[i].image_index = item[i].item_id;
